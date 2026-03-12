@@ -1,4 +1,8 @@
 # admc-redos
+Центр управления Active Directory (Active Directory Management Center, ADMC) — это
+комплексный интегрированный инструмент, реализующий модули «Пользователи и компьютеры» и
+«Диспетчер групповой политики» из пакета Microsoft Remote Server Administration Tools (RSAT).
+
 Скрипт автоматической соборки ADMC 0.22.3 (https://github.com/altlinux/admc) для Ред ОС 8, собранные пакеты
 
 # Сборка rpm-пакета ADMC для Ред ОС
