@@ -1,9 +1,8 @@
 # admc-redos
 Скрипт автоматической соборки ADMC 0.22.3 (https://github.com/altlinux/admc) для Ред ОС 8, собранные пакеты
----
 
 # Сборка rpm-пакета ADMC для Ред ОС
----
+
 1. Устанавливаем необходимые зависимости
 ```bash
 sudo dnf install curl mock mock-core-configs rpmdevtools rpm-build systemd-container unzip tar
