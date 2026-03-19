@@ -42,16 +42,16 @@ if [[ ! -s "$ZIP_FILE" ]]; then
   exit 1
 fi
 
-echo "[2/12] Распаковка $ZIP_FILE..."
+echo "[2/14] Распаковка $ZIP_FILE..."
 unzip -o "$ZIP_FILE" >/dev/null
 
-echo "[3/12] Проверка spec-файла..."
+echo "[3/14] Проверка spec-файла..."
 if [[ ! -f "$SPEC_FILE" ]]; then
   echo "Ошибка: не найден spec-файл $SPEC_FILE" >&2
   exit 1
 fi
 
-echo "[4/12] Чтение версии из spec..."
+echo "[4/14] Чтение версии из spec..."
 VERSION="$(awk -F': *' '/^Version:/ {print $2; exit}' "$SPEC_FILE")"
 
 if [[ -z "${VERSION:-}" ]]; then
@@ -70,20 +70,20 @@ if [[ "$DST_DIR" == "$SRC_DIR" ]]; then
   exit 1
 fi
 
-echo "[5/12] Переименование каталога в $DST_DIR..."
+echo "[5/14] Переименование каталога в $DST_DIR..."
 if [[ -d "$DST_DIR" ]]; then
   rm -rf "$DST_DIR"
 fi
 mv "$SRC_DIR" "$DST_DIR"
 
-echo "[6/12] Упаковка в $TAR_FILE..."
+echo "[6/14] Упаковка в $TAR_FILE..."
 tar -cf "$TAR_FILE" "$DST_DIR"
 
-echo "[7/12] Очистка временных артефактов..."
+echo "[7/14] Очистка временных артефактов..."
 rm -rf "$DST_DIR"
 rm -f "$ZIP_FILE"
 
-echo "[8/12] Подготовка rpmbuild-дерева..."
+echo "[8/14] Подготовка rpmbuild-дерева..."
 if ! command -v rpmdev-setuptree >/dev/null 2>&1; then
   echo "Ошибка: команда rpmdev-setuptree не найдена. Установите rpmdevtools." >&2
   exit 1
@@ -101,28 +101,28 @@ if [[ ! -d "$SPECS_DIR" ]]; then
   exit 1
 fi
 
-echo "[9/12] Перенос исходного архива в SOURCES..."
+echo "[9/14] Перенос исходного архива в SOURCES..."
 if [[ ! -f "$TAR_FILE" ]]; then
   echo "Ошибка: архив $TAR_FILE не найден для переноса." >&2
   exit 1
 fi
 mv -f "$TAR_FILE" "$SOURCES_DIR/"
 
-echo "[10/12] Переименование patch и перенос в SOURCES..."
+echo "[10/14] Переименование patch и перенос в SOURCES..."
 if [[ ! -f "$PATCH_SRC" ]]; then
   echo "Ошибка: patch-файл $PATCH_SRC не найден." >&2
   exit 1
 fi
 cp -f "$PATCH_SRC" "$SOURCES_DIR/$PATCH_DST"
 
-echo "[11/12] Обновление версии в $SPEC_SRC и перенос в SPECS..."
+echo "[11/14] Обновление версии в $SPEC_SRC и перенос в SPECS..."
 if [[ ! -f "$SPEC_SRC" ]]; then
   echo "Ошибка: spec-файл $SPEC_SRC не найден." >&2
   exit 1
 fi
 sed -E "s/^(Version:[[:space:]]*)master$/\1${VERSION}/" "$SPEC_SRC" > "$SPEC_DST"
 
-echo "[12/13] Сборка src-пакета (rpmbuild -bs)..."
+echo "[12/14] Сборка src-пакета (rpmbuild -bs)..."
 rpmbuild -bs "$SPEC_DST"
 
 echo "[13/14] Запрос на сборку в mock..."
