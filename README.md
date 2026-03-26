@@ -3,7 +3,7 @@
 комплексный интегрированный инструмент, реализующий модули «Пользователи и компьютеры» и
 «Диспетчер групповой политики» из пакета Microsoft Remote Server Administration Tools (RSAT).
 
-Скрипт автоматической соборки ADMC 0.22.3 (https://github.com/altlinux/admc) для Ред ОС 8, собранные пакеты
+Скрипт автоматической соборки ADMC 0.23.0 (https://github.com/altlinux/admc) для Ред ОС 8, собранные пакеты
 
 # Сборка rpm-пакета ADMC для Ред ОС
 
@@ -27,13 +27,12 @@ su - "$(whoami)"
 
 # Примечание:
 1. Первичная сборка в mock длится долго из-за необходимости создания нового окружения
-2. Патчи применимы к версии ADMC 0.22.3
-- только для Ред ОС (исправляет ошибку сборки):
+2. Патчи применимы к версии ADMC 0.23.0
 ```patch
 diff -u src/admc/main.cpp src/admc/main.cpp
---- src/admc/main.cpp	2026-02-21 07:52:57.000000000 +0700
-+++ src/admc/main.cpp	2026-03-01 14:30:00.000000000 +0700
-@@ -106,7 +106,7 @@
+--- src/admc/main.cpp	2026-03-26 23:33:55.852042747 +0700
++++ src/admc/main.cpp	2026-03-26 23:37:42.015558322 +0700
+@@ -117,7 +117,7 @@
          }
      }
      catch (const std::runtime_error& e) {
@@ -42,44 +41,10 @@ diff -u src/admc/main.cpp src/admc/main.cpp
      }
 
      load_connection_options();
-```
-- для Ред ОС и Debian 13 (опечатка в CMakeLists.txt):
-```patch
-diff -u src/adldap/CMakeLists.txt src/adldap/CMakeLists.txt
---- src/adldap/CMakeLists.txt	2026-02-21 07:52:57.000000000 +0700
-+++ src/adldap/CMakeLists.txt	2026-03-01 11:40:05.111637402 +0700
-@@ -81,7 +81,7 @@
-              DESTINATION ${SMB_SRC_PATH})
-         file(COPY ${SMB_SRC_PATH}/src_older/ndr_sec_helper.c
-              DESTINATION ${SMB_SRC_PATH})
--    endif(VERSION_SMB_MINOR GREATER_EQUAL 20)
-+    endif(VERSION_SMB_MINOR GREATER_EQUAL 22)
- else()
-     message(WARNING "Failed to find Samba version. If its version is 20 or greater, use sources from src_4_20.")
- endif(EXISTS ${VERSION_H})
-```
-
-- для Ред ОС и Debian 13 (падение ADMC при запуске без предварительного выполнения kinit):
-```patch
-diff -u src/adldap/krb5client.cpp src/adldap/krb5client.cpp
---- src/adldap/krb5client.cpp	2026-02-21 07:52:57.000000000 +0700
-+++ src/adldap/krb5client.cpp	2026-03-01 11:41:57.677958846 +0700
-@@ -228,7 +228,7 @@
-
- void Krb5Client::Krb5ClientImpl::load_cache_data(krb5_ccache ccache, bool is_system) {
-     krb5_error_code res;
--    krb5_principal principal;
-+    krb5_principal principal = nullptr;
-     krb5_creds creds;
-     Krb5TGTData tgt_data;
-```
-
-- для Ред ОС и Debian 13 (отключение поиска тем, используемых только в AltLinux):
-```patch
 diff -u src/admc/managers/icon_manager.cpp src/admc/managers/icon_manager.cpp
---- src/admc/managers/icon_manager.cpp	2026-02-21 07:52:57.000000000 +0700
-+++ src/admc/managers/icon_manager.cpp	2026-03-12 10:34:53.465392423 +0700
-@@ -297,7 +297,7 @@
+--- src/admc/managers/icon_manager.cpp	2026-03-25 21:22:18.000000000 +0700
++++ src/admc/managers/icon_manager.cpp	2026-03-26 23:36:57.515047160 +0700
+@@ -317,7 +317,7 @@
  }
 
  QStringList IconManager::available_themes() {
@@ -87,6 +52,6 @@ diff -u src/admc/managers/icon_manager.cpp src/admc/managers/icon_manager.cpp
 +    const QStringList available_themes = {impl->system_theme};
 
      return available_themes;
- }
+ } 
 ```
 
