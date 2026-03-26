@@ -39,9 +39,9 @@ Patch0:         %name-%version-%release.patch
 BuildArch:      x86_64
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
-BuildRequires:  qt5-qtbase-devel
-BuildRequires:  qt5-qtbase-common
-BuildRequires:  qt5-qttools-devel
+BuildRequires:  qt6-qtbase-devel
+BuildRequires:  qt6-qtbase-common
+BuildRequires:  qt6-qttools-devel
 BuildRequires:  samba-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  openldap-devel
@@ -52,6 +52,7 @@ BuildRequires:  doxygen
 
 Requires:       cyrus-sasl
 Requires:       cyrus-sasl-gssapi
+Requires:       qt6-qtsvg
 
 %description
 Active Directory Management Center (ADMC) is integrated complex tool implements
@@ -88,6 +89,22 @@ rm -rf %{buildroot}%_libdir/.build-id
 %_iconsdir/hicolor/scalable/apps/admc.svg
 
 %changelog
+* Tue Feb 24 2026 Semyon Knyazev <samael@altlinux.org> 0.23.0-alt1
+- The Sites container has been added to the console tree.
+- Added the ability to create/delete site objects, subnets, site links,
+  and site link bridges.
+- Added a "General" tab in the properties window for site objects, site
+  links, and site link bridges.
+- Added a replication schedule dialog to the "General" tab of site link
+  objects (button: "Change Schedule...").
+- Added the ability to move server objects between sites.
+- Added a results widget for subnets.
+- Fixed the issue where password settings objects did not appear in the
+  password settings container after creation.
+- Added an "Info" status for logs (blue color).
+- Restored the connection error dialog for failed connections. The dialog
+  appears if valid credentials (Kerberos) are present.
+
 * Sat Feb 21 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.22.3-alt2
 - Samba 4.22 compatibility update.
 - Fixed project URL.
