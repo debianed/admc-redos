@@ -89,6 +89,12 @@ rm -rf %{buildroot}%_libdir/.build-id
 %_iconsdir/hicolor/scalable/apps/admc.svg
 
 %changelog
+* Tue Apr 14 2026 Semyon Knyazev <samael@altlinux.org> 0.23.1-alt1
+- Disabled the "Show Non-Container Objects in Console Tree" and
+  "Advanced Features" options for the sites subtree display.
+- Fixed a crash when changing credentials while the network is
+  disconnected. (closes: 58703)
+
 * Tue Feb 24 2026 Semyon Knyazev <samael@altlinux.org> 0.23.0-alt1
 - The Sites container has been added to the console tree.
 - Added the ability to create/delete site objects, subnets, site links,
